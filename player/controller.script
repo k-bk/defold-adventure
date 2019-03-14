@@ -1,0 +1,27 @@
+go.property("max_speed", 100)
+
+function init(self)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+  if message_id == hash("walk_to") then
+    walk_to(self, message.to_x, sender)
+  end
+end
+
+function walk_to(self, to_x, object)
+  local p = go.get_world_position("#")
+  local time = math.abs(to_x - p.x) / self.max_speed
+  go.animate(
+    go.get_id(), 
+    "position.x", 
+    go.PLAYBACK_ONCE_FORWARD, 
+    to_x, 
+    go.EASING_LINEAR, 
+    time, 0,
+    function() msg.post(object, "arrived") end
+  )
+end

@@ -1,11 +1,11 @@
 images {
-  image: "/assets/images/background.png"
-}
-images {
   image: "/assets/images/logo.png"
 }
 images {
   image: "/builtins/graphics/particle_blob.png"
+}
+images {
+  image: "/assets/images/boundary.png"
 }
 margin: 0
 extrude_borders: 2

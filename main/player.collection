@@ -1,9 +1,30 @@
 name: "default"
+instances {
+  id: "camera"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "player"
+  children: "camera"
   data: "components {\n"
-  "  id: \"player\"\n"
+  "  id: \"controller\"\n"
   "  component: \"/main/player.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -28,7 +49,7 @@ embedded_instances {
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
-  "    z: 0.0\n"
+  "    z: 10.0\n"
   "  }\n"
   "  rotation {\n"
   "    x: 0.0\n"

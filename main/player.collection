@@ -1,28 +1,7 @@
 name: "default"
-instances {
-  id: "camera"
-  prototype: "/orthographic/camera.go"
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
 scale_along_z: 0
 embedded_instances {
   id: "player"
-  children: "camera"
   data: "components {\n"
   "  id: \"controller\"\n"
   "  component: \"/main/player.script\"\n"
@@ -42,7 +21,7 @@ embedded_instances {
   "  id: \"sprite\"\n"
   "  type: \"sprite\"\n"
   "  data: \"tile_set: \\\"/main/main.atlas\\\"\\n"
-  "default_animation: \\\"logo\\\"\\n"
+  "default_animation: \\\"spellun-sprite\\\"\\n"
   "material: \\\"/builtins/materials/sprite.material\\\"\\n"
   "blend_mode: BLEND_MODE_ALPHA\\n"
   "\"\n"

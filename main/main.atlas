@@ -7,6 +7,9 @@ images {
 images {
   image: "/assets/images/boundary.png"
 }
+images {
+  image: "/assets/images/spellun-sprite.png"
+}
 margin: 0
 extrude_borders: 2
 inner_padding: 0

@@ -16,6 +16,16 @@ instances {
   component_properties {
     id: "script"
     properties {
+      id: "near_z"
+      value: "-100.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "far_z"
+      value: "100.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
       id: "follow"
       value: "true"
       type: PROPERTY_TYPE_BOOLEAN
@@ -30,6 +40,46 @@ instances {
       value: "/player"
       type: PROPERTY_TYPE_HASH
     }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "bbox"
+  prototype: "/main/bbox.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.099
+    y: 1.242
+    z: 1.0
+  }
+}
+instances {
+  id: "env_manager"
+  prototype: "/main/env_manager.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
   }
   scale3 {
     x: 1.0
@@ -81,8 +131,8 @@ embedded_instances {
 embedded_instances {
   id: "player"
   data: "components {\n"
-  "  id: \"controller\"\n"
-  "  component: \"/main/controller.script\"\n"
+  "  id: \"player\"\n"
+  "  component: \"/main/player.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -96,10 +146,10 @@ embedded_instances {
   "  }\n"
   "}\n"
   "embedded_components {\n"
-  "  id: \"logo\"\n"
+  "  id: \"sprite\"\n"
   "  type: \"sprite\"\n"
   "  data: \"tile_set: \\\"/main/main.atlas\\\"\\n"
-  "default_animation: \\\"logo\\\"\\n"
+  "default_animation: \\\"spellun-sprite\\\"\\n"
   "material: \\\"/builtins/materials/sprite.material\\\"\\n"
   "blend_mode: BLEND_MODE_ALPHA\\n"
   "\"\n"
@@ -118,8 +168,8 @@ embedded_instances {
   ""
   position {
     x: -51.0
-    y: 0.0
-    z: 1.0
+    y: -90.0
+    z: 2.0
   }
   rotation {
     x: 0.0
@@ -128,18 +178,32 @@ embedded_instances {
     w: 1.0
   }
   scale3 {
-    x: 1.0
-    y: 1.0
+    x: 1.782
+    y: 3.235
     z: 1.0
   }
 }
 embedded_instances {
   id: "flower"
-  children: "bounding_box"
-  children: "offset"
+  children: "bbox"
   data: "components {\n"
   "  id: \"controller\"\n"
-  "  component: \"/main/env.script\"\n"
+  "  component: \"/main/flower.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "components {\n"
+  "  id: \"bbox\"\n"
+  "  component: \"/main/bbox.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -177,81 +241,6 @@ embedded_instances {
     x: -482.0
     y: -72.0
     z: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-embedded_instances {
-  id: "bounding_box"
-  data: "components {\n"
-  "  id: \"bounding_box\"\n"
-  "  component: \"/main/bounding_box.script\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "}\n"
-  "embedded_components {\n"
-  "  id: \"boundary\"\n"
-  "  type: \"sprite\"\n"
-  "  data: \"tile_set: \\\"/main/main.atlas\\\"\\n"
-  "default_animation: \\\"boundary\\\"\\n"
-  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
-  "blend_mode: BLEND_MODE_ALPHA\\n"
-  "\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "}\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.868
-    y: 0.77
-    z: 1.0
-  }
-}
-embedded_instances {
-  id: "offset"
-  data: ""
-  position {
-    x: 137.0
-    y: 0.0
-    z: 0.0
   }
   rotation {
     x: 0.0

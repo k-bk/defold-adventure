@@ -1,0 +1,25 @@
+function init(self)
+  self.id = go.get_id()
+end
+
+function on_look(self)
+  print("looking at " .. self.id)
+end
+
+function on_action(self)
+  print("acting on " .. self.id)
+end
+
+function on_item(self, item)
+  print("using item: " .. item.name .. " on " .. self.id)
+end
+
+function on_message(self, message_id, message, sender)
+  if message_id == hash("on_look") then
+    on_look(self)
+  elseif message_id == hash("on_action") then
+    on_action(self)
+  elseif massage_id == hash("on_item") then
+    on_item(self, message.item)
+  end
+end

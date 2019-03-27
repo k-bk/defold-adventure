@@ -1,0 +1,58 @@
+local camera = require "orthographic.camera"
+
+go.property("camera_id", hash("/camera"))
+
+function init(self)
+	self.subscriptions = {}
+	self.player_goal = {}
+
+	msg.post(".", "acquire_input_focus")
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("subscribe") then
+		local new_subscriber = {
+			id = message.id,
+			position = message.position,
+			size = message.size,
+			offset_x = message.offset_x
+		}
+		table.insert(self.subscriptions, new_subscriber)
+	elseif message_id == hash("arrived") then
+		if self.player_goal then
+			msg.post(self.player_goal, "on_action")
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("click") and action.released then
+		local mouse_pos = vmath.vector3(action.x, action.y, 0)
+		local world_pos = camera.screen_to_world(self.camera_id, mouse_pos)
+		local env = get_colliding(world_pos, self.subscriptions)
+		if env then
+			msg.post("/player", "walk_to", { to_x = env.position.x + env.offset_x })
+			self.player_goal = env.id
+		else 
+			msg.post("/player", "walk_to", { to_x = world_pos.x })
+			self.player_goal = nil
+		end
+
+	end
+end
+
+function get_colliding(point, boxes)
+	for _,box in ipairs(boxes) do
+		if point_inside_box(point, box.position, box.size) then
+			return box
+		end
+	end
+end
+
+function point_inside_box(point, box, size)
+	return 
+	point.x < box.x + size.x/2 and 
+	point.x > box.x - size.x/2 and 
+	point.y < box.y + size.y/2 and 
+	point.y > box.y - size.y/2 
+end

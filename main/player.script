@@ -1,4 +1,4 @@
-go.property("max_speed", 100)
+go.property("max_speed", 200)
 
 function init(self)
   msg.post(".", "acquire_input_focus")
@@ -19,14 +19,14 @@ function on_input(self, action_id, action)
   end
 end
 
-function on_message(self, message_id, message, sender)
+function on_message(self, message_id, message, manager)
   if message_id == hash("walk_to") then
-    walk_to(self, message.to_x, sender)
+    walk_to(self, message.to_x, manager)
   end
 end
 
-function walk_to(self, to_x, object)
-  local p = go.get_world_position("#")
+function walk_to(self, to_x, manager)
+  local p = go.get_world_position(".")
   local time = math.abs(to_x - p.x) / self.max_speed
   go.animate(
     go.get_id(), 
@@ -35,6 +35,6 @@ function walk_to(self, to_x, object)
     to_x, 
     go.EASING_LINEAR, 
     time, 0,
-    function() msg.post(object, "arrived") end
+    function() msg.post(manager, "arrived") end
   )
 end

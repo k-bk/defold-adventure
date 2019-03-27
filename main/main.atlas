@@ -10,6 +10,9 @@ images {
 images {
   image: "/assets/images/spellun-sprite.png"
 }
+images {
+  image: "/assets/images/offset_cursor.png"
+}
 margin: 0
 extrude_borders: 2
 inner_padding: 0

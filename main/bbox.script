@@ -8,13 +8,12 @@ function init(self)
 		id = go.get_id(),
 		position = go.get_world_position("bbox#box"),
 		size = vmath.vector3(raw_size.x * scale.x, raw_size.y * scale.y, 0),
-		offset_x = go.get_position("bbox#offset").x
+		offset_x = go.get_position("offset").x
 	}
-	print(data.id)
 
 	msg.post(self.manager_id, "subscribe", data)
 	if not self.visible then
 		msg.post("bbox#box", "disable")
-		msg.post("bbox#offset", "disable")
+		msg.post("offset#offset", "disable")
 	end
 end

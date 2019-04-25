@@ -1,6 +1,9 @@
 go.property("visible", true)
 go.property("manager_id", hash("/env_manager"))
 
+
+
+
 function init(self)
 	local scale = go.get_world_scale("bbox")
 	local raw_size = go.get("bbox#box", "size")
@@ -17,3 +20,6 @@ function init(self)
 		msg.post("offset#offset", "disable")
 	end
 end
+
+
+

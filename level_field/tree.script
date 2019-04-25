@@ -1,3 +1,7 @@
+
+
+
+
 function init(self)
 	self.id = go.get_id()
 	self.actions = { "look", "take", "talk" }
@@ -6,15 +10,24 @@ function init(self)
 	label.set_text("#text", "")
 end
 
+
+
+
 function on_look(self)
 	print("looking at " .. self.id)
 	self.sequence = nil
 end
 
+
+
+
 function on_item(self)
 	print("using item: " .. item.name .. " on " .. self.id)
 	self.sequence = nil
 end
+
+
+
 
 function on_talk(self, item)
 	local talk = {
@@ -25,6 +38,9 @@ function on_talk(self, item)
 	label.set_text("#text", talk[math.random(#talk)])
 	self.sequence = nil
 end
+
+
+
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("on_look") then
@@ -41,3 +57,5 @@ function on_message(self, message_id, message, sender)
 
 	end
 end
+
+

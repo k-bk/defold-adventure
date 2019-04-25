@@ -1,3 +1,7 @@
+
+
+
+
 function init(self)
   self.id = go.get_id()
   self.actions = { "look", "take", "talk" }
@@ -6,15 +10,24 @@ function init(self)
   label.set_text("#text", "")
 end
 
+
+
+
 function on_look(self)
   print("looking at " .. self.id)
   self.sequence = nil
 end
 
+
+
+
 function on_item(self)
   print("using item: " .. item.name .. " on " .. self.id)
   self.sequence = nil
 end
+
+
+
 
 function on_talk(self, item)
   local jump = function () go.animate(".", "position.y", go.PLAYBACK_ONCE_PINGPONG, 5, go.EASING_INCIRC, 0.2) end
@@ -35,6 +48,9 @@ function on_talk(self, item)
   self.sequence = nil
 end
 
+
+
+
 function on_message(self, message_id, message, sender)
   if message_id == hash("on_look") then
     self.sequence = self.sequence or coroutine.create(on_look)
@@ -50,3 +66,6 @@ function on_message(self, message_id, message, sender)
 
   end
 end
+
+
+

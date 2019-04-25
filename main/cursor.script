@@ -1,0 +1,49 @@
+go.property("camera_id", hash("/camera"))
+local camera = require "orthographic.camera"
+
+
+function init(self)
+	self.colliding = {}
+	self.mouse_pos = vmath.vector3()
+	msg.post(".", "acquire_input_focus")
+end
+
+
+
+
+function update(self, dt)
+	local pos = camera.screen_to_world(self.camera_id, self.mouse_pos)
+	pos.z = 99
+	go.set_position(pos, "#")
+end
+
+
+
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("trigger_response") then
+		colliding[message.other_id] = message.enter
+		pprint("collision", message)
+	elseif message_id == hash("colliding") then
+		local other = nil
+		for obj,under_cursor in ipairs(colliding) do
+			if under_cursor then
+				other = obj
+				break
+			end
+		end
+		msg.post(sender, "colliding", { id = other })
+	end
+end
+
+
+
+
+function on_input(self, action_id, action)
+	if action.x and action.y then
+		mouse_pos.x, mouse_pos.y = action.x, action.y
+	end
+end
+
+
+

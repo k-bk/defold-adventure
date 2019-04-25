@@ -41,7 +41,7 @@ end
 
 function on_input(self, action_id, action)
 	if action.x and action.y then
-		mouse_pos.x, mouse_pos.y = action.x, action.y
+		self.mouse_pos.x, self.mouse_pos.y = action.x, action.y
 	end
 end
 

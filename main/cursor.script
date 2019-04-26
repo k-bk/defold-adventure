@@ -22,17 +22,17 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("trigger_response") then
-		colliding[message.other_id] = message.enter
+		self.colliding[message.other_id] = message.enter
 		pprint("collision", message)
 	elseif message_id == hash("colliding") then
 		local other = nil
-		for obj,under_cursor in ipairs(colliding) do
+		for obj,under_cursor in ipairs(self.colliding) do
 			if under_cursor then
 				other = obj
 				break
 			end
 		end
-		msg.post(sender, "colliding", { id = other })
+		msg.post(sender, "walk_to_target", { id = other })
 	end
 end
 

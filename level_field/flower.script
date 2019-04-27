@@ -1,71 +1,44 @@
+local action = require "main.env_action"
+local env = require "main.env"
 
 
 
+local function on_look(self)
+	print("looking at " .. self.id)
+	action.finish()
+end
+
+
+
+local function on_item(self)
+	print("using item: " .. item.name .. " on " .. self.id)
+	action.finish()
+end
+
+
+
+local function on_talk(self, item)
+	local talk = {
+		"Red flower, the color of blood.",
+		"Throw a little joke sometimes, please.",
+		"You are a joke, mister."
+	}
+	for _,s in ipairs(talk) do
+		action.text(s)
+		coroutine.yield()
+	end
+	action.text("")
+	action.finish()
+end
+
+
+
+------------------------------------
 
 function init(self)
-  self.id = go.get_id()
-  self.actions = { "look", "take", "talk" }
-  self.timer = 0
-  self.sequence = nil
-  label.set_text("#text", "")
+	env.init(self, on_look, on_item, on_talk)
 end
-
-
-
-
-function on_look(self)
-  print("looking at " .. self.id)
-  self.sequence = nil
-end
-
-
-
-
-function on_item(self)
-  print("using item: " .. item.name .. " on " .. self.id)
-  self.sequence = nil
-end
-
-
-
-
-function on_talk(self, item)
-  local jump = function () go.animate(".", "position.y", go.PLAYBACK_ONCE_PINGPONG, 5, go.EASING_INCIRC, 0.2) end
-  
-  label.set_text("#text", "Jestem kwiatek. Kim ty jesteś?")
-  jump()
-  coroutine.yield()
-  label.set_text("#text", "Może pogramy w kręgle?")
-  jump()
-  coroutine.yield()
-  label.set_text("#text", "Ja też lubię, gdy pada deszcz.")
-  jump()
-  coroutine.yield()
-  label.set_text("#text", "Miło się z tobą gawędzi.")
-  jump()
-  coroutine.yield()
-  label.set_text("#text", "")
-  self.sequence = nil
-end
-
-
-
 
 function on_message(self, message_id, message, sender)
-  if message_id == hash("on_look") then
-    self.sequence = self.sequence or coroutine.create(on_look)
-    coroutine.resume(self.sequence, self)
-
-  elseif message_id == hash("on_item") then
-    self.sequence = self.sequence or coroutine.create(on_item)
-    coroutine.resume(self.sequence, self, message.item)
-
-  elseif message_id == hash("on_talk") then
-    self.sequence = self.sequence or coroutine.create(on_talk)
-    coroutine.resume(self.sequence, self)
-
-  end
+	env.on_message(self, message_id, message, sender)
 end
-
-
-

@@ -3,51 +3,35 @@ go.property("camera_id", hash("/camera"))
 
 
 
-
 function init(self)
-	self.player_goal = {}
+	self.target = nil
+	self.target_pos = vmath.vector3()
 
 	msg.post(".", "acquire_input_focus")
 end
 
 
 
-
 function on_message(self, message_id, message, sender)
 	if message_id == hash("arrived") then
-		if self.player_goal then
-			msg.post(self.player_goal, "on_talk")
+		if self.target then
+			msg.post(self.target, "on_talk")
 		end
-	elseif message_id == hash("colliding") then
-		if message.id then
-			go.get_position(colliding)
+	elseif message_id == hash("set_target") then
+		self.target = message.id
+		if self.target then
+			self.target_pos = go.get_position(self.target)
 		end
+		msg.post("/player", "walk_to", { to_x = self.target_pos.x } )
 	end
 end
-
 
 
 
 function on_input(self, action_id, action)
 	if action_id == hash("click") and action.released then
-		local env = get_colliding(world_pos)
-		if env.id then
-			msg.post("/player", "walk_to", { to_x = env.position.x + env.offset_x })
-			self.player_goal = env.id
-		else 
-			msg.post("/player", "walk_to", { to_x = world_pos.x })
-			self.player_goal = nil
-		end
-
+		self.target_pos = vmath.vector3(action.x, action.y, 0)
+		self.target_pos= camera.screen_to_world(self.camera_id, self.target_pos)
+		msg.post("/cursor", "get_colliding")
 	end
 end
-
-
-
-
-function get_colliding(point, boxes)
-	msg.post("/cursor", "get_colliding")
-end
-
-
-

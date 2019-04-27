@@ -47,11 +47,11 @@ instances {
     z: 1.0
   }
 }
-instances {
-  id: "env_manager"
-  prototype: "/main/env_manager.go"
+collection_instances {
+  id: "tree"
+  collection: "/level_field/tree.collection"
   position {
-    x: 0.0
+    x: 255.0
     y: 0.0
     z: 0.0
   }
@@ -71,28 +71,8 @@ collection_instances {
   id: "flower"
   collection: "/level_field/flower.collection"
   position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "tree"
-  collection: "/level_field/tree.collection"
-  position {
-    x: 255.0
-    y: 0.0
+    x: -292.0
+    y: -107.0
     z: 0.0
   }
   rotation {
@@ -275,6 +255,41 @@ embedded_instances {
   "material: \\\"/builtins/materials/sprite.material\\\"\\n"
   "blend_mode: BLEND_MODE_ALPHA\\n"
   "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "env_manager"
+  data: "components {\n"
+  "  id: \"env_manager\"\n"
+  "  component: \"/main/env_manager.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"

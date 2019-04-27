@@ -22,17 +22,14 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("trigger_response") then
-		self.colliding[message.other_id] = message.enter
-		pprint("collision", message)
-	elseif message_id == hash("colliding") then
-		local other = nil
-		for obj,under_cursor in ipairs(self.colliding) do
-			if under_cursor then
-				other = obj
-				break
-			end
+		if message.enter then
+			self.colliding[message.other_id] = true
+		else
+			self.colliding[message.other_id] = nil
 		end
-		msg.post(sender, "walk_to_target", { id = other })
+	elseif message_id == hash("get_colliding") then
+		local other = next(self.colliding)
+		msg.post(sender, "set_target", { id = other })
 	end
 end
 
@@ -42,6 +39,8 @@ end
 function on_input(self, action_id, action)
 	if action.x and action.y then
 		self.mouse_pos.x, self.mouse_pos.y = action.x, action.y
+	elseif action_id == hash("click") and action.released then
+		msg.post(".", "get_colliding")
 	end
 end
 
